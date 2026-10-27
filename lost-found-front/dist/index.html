@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="분실물 검색 조건을 저장하고, 습득한 물건을 안전하게 알리는 다시, 여기 데모" />
+    <title>다시, 여기 — 분실물 찾기와 알리기</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 바로가기</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="다시, 여기 홈"><span class="brand-mark" aria-hidden="true">↩</span><span>다시, 여기</span></a>
+      <nav aria-label="주요 메뉴">
+        <a href="#search">찾기</a><a href="#report">알리기</a>
+        <button class="notification-trigger" id="notification-trigger" type="button" aria-controls="notification-panel">알림 <span class="count-badge" id="notification-count" aria-label="저장된 알림 0개">0</span></button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">잃어버린 순간과 발견한 마음을 연결해요</p>
+          <h1 id="hero-title">다시 만날 수 있도록,<br /><em>여기서 이어드릴게요.</em></h1>
+          <p class="hero-description">흩어진 분실물 정보를 한곳에서 좁혀 보고, 습득 소식은 필요한 만큼만 안전하게 알려주세요.</p>
+        </div>
+        <div class="journey-grid" aria-label="서비스 시작하기">
+          <a class="journey-card journey-card--find" href="#search">
+            <span class="journey-number" aria-hidden="true">01</span><span class="journey-icon" aria-hidden="true">⌕</span>
+            <strong>찾고 있어요</strong><span>물건·장소·시간으로<br />후보를 빠르게 좁혀보세요.</span>
+            <span class="journey-link">어떻게 찾을까? <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="journey-card journey-card--report" href="#report">
+            <span class="journey-number" aria-hidden="true">02</span><span class="journey-icon" aria-hidden="true">✦</span>
+            <strong>보관하고 있어요</strong><span>주인을 기다리는 물건을<br />1분 안에 알려주세요.</span>
+            <span class="journey-link">어떻게 알릴까? <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="search-section" id="search" aria-labelledby="search-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">어떻게 찾을까?</p><h2 id="search-title">기억나는 단서부터<br />하나씩 좁혀보세요.</h2></div>
+          <p>정확하지 않아도 괜찮아요. 입력한 조건은 바로 결과에 반영됩니다.</p>
+        </div>
+        <form class="search-form" id="search-form" role="search">
+          <div class="field field--wide"><label for="search-keyword">무엇을 잃어버렸나요?</label><input id="search-keyword" name="keyword" type="search" placeholder="예: 검은색 카드지갑, 토끼 키링" autocomplete="off" /></div>
+          <div class="field"><label for="search-category">카테고리</label><select id="search-category" name="category"><option value="">전체</option><option value="지갑·카드">지갑·카드</option><option value="전자기기">전자기기</option><option value="가방">가방</option><option value="의류·잡화">의류·잡화</option><option value="열쇠">열쇠</option><option value="기타">기타</option></select></div>
+          <div class="field"><label for="search-location">장소</label><input id="search-location" name="location" type="search" placeholder="예: 성수역, 한강공원" autocomplete="off" /></div>
+          <div class="field"><label for="search-date">습득 날짜</label><input id="search-date" name="date" type="date" /></div>
+          <div class="search-actions"><button class="button button--ghost" type="reset">조건 초기화</button><button class="button button--accent" id="save-alert" type="button">이 조건으로 알림 받기</button></div>
+        </form>
+        <div class="results-toolbar"><p id="result-summary" aria-live="polite">찾은 물건을 불러오는 중이에요.</p><span>최근 습득순</span></div>
+        <div class="results-grid" id="results-grid"></div>
+        <div class="empty-state" id="empty-state" hidden><span aria-hidden="true">⌕</span><h3>아직 맞는 물건이 없어요</h3><p>조건을 조금 넓히거나, 현재 조건을 알림으로 저장해 보세요.</p><button class="button button--accent" id="empty-save-alert" type="button">검색 알림 저장</button></div>
+      </section>
+
+      <section class="safety-strip" aria-labelledby="safety-title">
+        <span class="safety-icon" aria-hidden="true">✓</span>
+        <div><p class="eyebrow">안전한 연결 원칙</p><h2 id="safety-title">아는 정보는 모두 공개하지 않아요.</h2></div>
+        <p>연락처와 고유한 특징은 공개 목록에 표시하지 않습니다. 물건을 돌려주기 전, 소유자만 알 수 있는 특징을 질문해 주세요.</p>
+      </section>
+
+      <section class="report-section" id="report" aria-labelledby="report-title">
+        <div class="section-heading section-heading--light">
+          <div><p class="eyebrow">어떻게 알릴까?</p><h2 id="report-title">주인을 기다리는 물건을<br />알려주세요.</h2></div>
+          <p>공개해도 안전한 정보만 입력해 주세요. <strong>*</strong> 표시는 필수 항목입니다.</p>
+        </div>
+        <form class="report-form" id="report-form">
+          <fieldset><legend><span>1</span> 물건 정보</legend><div class="form-grid">
+            <div class="field"><label for="report-category">카테고리 <span aria-hidden="true">*</span></label><select id="report-category" name="category" required><option value="">선택해 주세요</option><option value="지갑·카드">지갑·카드</option><option value="전자기기">전자기기</option><option value="가방">가방</option><option value="의류·잡화">의류·잡화</option><option value="열쇠">열쇠</option><option value="기타">기타</option></select></div>
+            <div class="field"><label for="report-title-input">물건 이름 <span aria-hidden="true">*</span></label><input id="report-title-input" name="title" required maxlength="50" placeholder="예: 검은색 카드지갑" /></div>
+            <div class="field field--full"><label for="report-description">눈에 보이는 특징 <span aria-hidden="true">*</span></label><textarea id="report-description" name="description" required maxlength="180" rows="3" placeholder="색상, 소재, 브랜드 등 공개해도 괜찮은 특징만 적어주세요."></textarea><p class="field-help">소유권 확인에 쓸 고유한 특징은 아래 비공개 힌트에 따로 적어주세요.</p></div>
+          </div></fieldset>
+          <fieldset><legend><span>2</span> 발견과 보관</legend><div class="form-grid">
+            <div class="field"><label for="report-location">발견 장소 <span aria-hidden="true">*</span></label><input id="report-location" name="location" required maxlength="60" placeholder="예: 성수역 2번 출구" /></div>
+            <div class="field"><label for="report-date">발견 일시 <span aria-hidden="true">*</span></label><input id="report-date" name="foundAt" type="datetime-local" required /></div>
+            <div class="field"><label for="report-storage">현재 보관 장소 <span aria-hidden="true">*</span></label><input id="report-storage" name="storage" required maxlength="60" placeholder="예: 성수역 역무실" /></div>
+            <div class="field"><label for="report-secret">비공개 확인 힌트 <span aria-hidden="true">*</span></label><input id="report-secret" name="secret" required maxlength="80" placeholder="예: 내부 각인 문구" /><p class="field-help">목록이나 상세 화면에 노출되지 않습니다.</p></div>
+          </div></fieldset>
+          <label class="consent-row"><input name="consent" type="checkbox" required /><span>개인 연락처를 입력하지 않았으며, 인계 전 소유권 확인이 필요함을 이해했습니다. <span aria-hidden="true">*</span></span></label>
+          <button class="button button--light" type="submit">습득 소식 등록하기 <span aria-hidden="true">→</span></button><p class="form-status" id="report-status" role="status" tabindex="-1"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer><a class="brand brand--footer" href="#top"><span class="brand-mark" aria-hidden="true">↩</span><span>다시, 여기</span></a><p>잃어버린 것과 발견한 마음이 다시 만나는 곳.</p><p class="demo-note">이 사이트는 브라우저에만 저장되는 프론트엔드 데모입니다.</p></footer>
+    <aside class="notification-panel" id="notification-panel" aria-labelledby="notification-title" hidden><div class="panel-header"><div><p class="eyebrow">나의 검색 알림</p><h2 id="notification-title">놓치지 않도록<br />기억해 둘게요.</h2></div><button class="icon-button" id="close-notifications" type="button" aria-label="알림 센터 닫기">×</button></div><div id="notification-list"></div><p class="panel-empty" id="notification-empty">저장한 검색 알림이 아직 없어요.</p></aside>
+    <div class="panel-backdrop" id="panel-backdrop" hidden></div>
+    <dialog class="detail-dialog" id="detail-dialog" aria-labelledby="detail-title"><button class="icon-button dialog-close" id="close-detail" type="button" aria-label="상세 보기 닫기">×</button><div id="detail-content"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>
